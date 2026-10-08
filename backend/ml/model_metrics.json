@@ -1,0 +1,98 @@
+{
+  "dataset_info": {
+    "total_samples": 160,
+    "train_samples": 128,
+    "test_samples": 32,
+    "features_count": 12,
+    "classes": [
+      "LOW",
+      "MODERATE",
+      "HIGH",
+      "EMERGENCY"
+    ]
+  },
+  "models": {
+    "logistic_regression": {
+      "name": "Logistic Regression",
+      "accuracy": 0.9375,
+      "precision": 0.95,
+      "recall": 0.9375,
+      "f1_score": 0.9253,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          8,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          21
+        ]
+      ]
+    },
+    "random_forest": {
+      "name": "Random Forest Classifier (Selected)",
+      "accuracy": 0.9688,
+      "precision": 0.9722,
+      "recall": 0.9688,
+      "f1_score": 0.9665,
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          8,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          21
+        ]
+      ],
+      "feature_importances": {
+        "symptom_code": 0.1024,
+        "duration_days": 0.1166,
+        "severity_score": 0.106,
+        "sudden_onset": 0.024,
+        "fever_present": 0.0301,
+        "breathing_difficulty": 0.0638,
+        "chest_pain_present": 0.1391,
+        "confusion_present": 0.1443,
+        "weakness_one_side": 0.0145,
+        "bleeding_present": 0.0144,
+        "loss_of_consciousness": 0.2,
+        "radiating_pain": 0.0448
+      }
+    }
+  },
+  "selected_model": "Random Forest Classifier",
+  "limitation_disclaimer": "This model is trained on an educational clinical dataset for demonstration of AI/ML concepts and is NOT clinically validated for medical triage."
+}

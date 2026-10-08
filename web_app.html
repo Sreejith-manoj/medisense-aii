@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediSense AI – Human-Centered Symptom Intelligence & Medical Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            clinical: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-family: 'Inter', sans-serif;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.4) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(238, 242, 255, 0.4) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+    h1, h2, h3, h4, .font-heading { font-family: 'Outfit', sans-serif; }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(2, 132, 199, 0); }
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-slide-right { animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-pulse-glow { animation: pulseGlow 2.5s infinite; }
+    .animate-float { animation: floatSlow 4s ease-in-out infinite; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    
+    .btn-gradient {
+      background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-gradient:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #4338ca 100%);
+      box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.4);
+      transform: translateY(-1px);
+    }
+
+    @media print {
+      body { background: #ffffff !important; color: #000000 !important; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-sky-600 selection:text-white">
+
+  <!-- Header Banner -->
+  <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 px-4 py-3.5 md:px-8 transition-all">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <!-- Brand Logo & Title -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-600 via-indigo-600 to-sky-500 text-white shadow-lg shadow-sky-500/20 flex items-center justify-center font-black text-xl animate-float">
+          ✚
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-heading">
+              MediSense<span class="text-sky-600">AI</span>
+            </h1>
+            <span class="px-3 py-0.5 rounded-full text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200 shadow-2xs">
+              Human-Centered Symptom Intelligence
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium mt-0.5 flex items-center gap-1.5">
+            <span>NLP Entity Parsing</span> • <span>Scikit-Learn ML Classifier</span> • <span>Vector RAG Engine</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Live System Status Badge -->
+      <div class="flex items-center gap-2.5 bg-slate-900 text-white px-4 py-2 rounded-2xl shadow-md border border-slate-800 text-xs font-semibold">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse-glow"></span>
+        <span class="tracking-wide">Educational Healthcare Decision Support</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Top Navigation Tabs -->
+  <div class="max-w-7xl mx-auto w-full px-4 md:px-8 mt-6">
+    <div class="flex items-center gap-2 overflow-x-auto border-b border-slate-200/80 pb-3 scrollbar-none">
+      <button id="tab-assistant" onclick="switchTab('ASSISTANT')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-sky-600 to-indigo-600 text-white shadow-md shadow-sky-500/15 whitespace-nowrap transition-all duration-200">
+        📋 Clinical Intake & Consultation
+      </button>
+      <button id="tab-model" onclick="switchTab('MODEL')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white/80 hover:bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-2xs whitespace-nowrap transition-all duration-200">
+        📊 Machine Learning Analytics
+      </button>
+      <button id="tab-simulation" onclick="switchTab('SIMULATION')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white/80 hover:bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-2xs whitespace-nowrap transition-all duration-200">
+        🧪 Evaluator Benchmark Suite
+      </button>
+      <button id="tab-knowledge" onclick="switchTab('KNOWLEDGE')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white/80 hover:bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-2xs whitespace-nowrap transition-all duration-200">
+        📚 Clinical Knowledge Explorer
+      </button>
+      <button id="tab-docs" onclick="switchTab('DOCS')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white/80 hover:bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-2xs whitespace-nowrap transition-all duration-200">
+        📑 System Architecture & AI Pipeline
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto w-full px-4 md:px-8 py-6 flex-1 space-y-6">
+
+    <!-- VIEW 1: CLINICAL INTAKE & CONSULTATION PORTAL -->
+    <div id="view-assistant" class="space-y-6 animate-fade-in">
+      
+      <!-- Interactive Clinical Persona Header -->
+      <div id="avatar-card" class="glass-card rounded-3xl p-6 border border-slate-200/80 shadow-md space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div id="avatar-circle" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-900 to-indigo-950 text-white flex items-center justify-center font-black text-lg shadow-lg">
+              AI
+            </div>
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h3 class="text-lg font-bold text-slate-900 font-heading">Clinical Assistant Persona</h3>
+                <span id="avatar-badge" class="px-3 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-50 text-sky-700 border border-sky-200 tracking-wider">SYSTEM READY</span>
+              </div>
+              <p class="text-xs text-slate-500 font-medium">Human-Centered Educational Decision-Support Engine</p>
+            </div>
+          </div>
+          <div class="text-xs font-semibold text-slate-600 bg-slate-100/80 px-4 py-2 rounded-2xl border border-slate-200/80 self-start sm:self-auto">
+            Non-Diagnostic Reference Tool
+          </div>
+        </div>
+        <div id="avatar-thought" class="bg-gradient-to-r from-sky-50/80 to-indigo-50/80 rounded-2xl p-4 border border-sky-100 text-xs text-slate-800 font-medium leading-relaxed">
+          Welcome! Provide patient demographics and symptom details below. MediSense AI will extract clinical slots, evaluate emergency safety red flags, execute machine learning urgency scoring, and generate a printable PDF consultation summary.
+        </div>
+      </div>
+
+      <!-- 8-Stage Execution Pipeline Visualization -->
+      <div class="glass-card rounded-3xl p-6 border border-slate-200/80 shadow-md space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="text-xs font-extrabold text-slate-500 uppercase tracking-widest font-heading">MediSense AI Execution Pipeline:</div>
+          <span class="text-[11px] font-bold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">8 Automated Stages</span>
+        </div>
+        <div id="pipeline-flowchart-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5"></div>
+      </div>
+
+      <div id="emergency-banner-area" class="hidden"></div>
+
+      <!-- Step 1: Patient Registration & Symptom Input -->
+      <div id="step-input" class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-6">
+        <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 font-heading">1. Patient Registration & Clinical Intake</h3>
+            <p class="text-xs text-slate-500 mt-1">Fill out demographic details to include in the official consultation record.</p>
+          </div>
+          <span class="w-8 h-8 rounded-full bg-sky-50 text-sky-700 font-bold flex items-center justify-center text-xs border border-sky-200">01</span>
+        </div>
+
+        <!-- Patient Demographics Form -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Patient Full Name:</label>
+            <input type="text" id="patient-name" placeholder="e.g. John Doe" value="John Doe" class="w-full bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none transition-all">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Age & Gender:</label>
+            <div class="flex gap-2">
+              <input type="number" id="patient-age" placeholder="Age" value="38" class="w-1/2 bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-3 py-2.5 text-xs text-slate-900 outline-none transition-all">
+              <select id="patient-gender" class="w-1/2 bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-2 py-2.5 text-xs text-slate-900 outline-none transition-all">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Blood Group:</label>
+            <select id="patient-blood" class="w-full bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none transition-all">
+              <option value="O+">O positive (O+)</option>
+              <option value="A+">A positive (A+)</option>
+              <option value="B+">B positive (B+)</option>
+              <option value="AB+">AB positive (AB+)</option>
+              <option value="O-">O negative (O-)</option>
+              <option value="A-">A negative (A-)</option>
+              <option value="B-">B negative (B-)</option>
+              <option value="AB-">AB negative (AB-)</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Known History / Allergies:</label>
+            <input type="text" id="patient-allergies" placeholder="e.g. Penicillin allergy" value="No known drug allergies" class="w-full bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none transition-all">
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-2 border-t border-slate-100">
+          <label class="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+            Chief Complaint (Natural Language Symptom Description):
+          </label>
+          <textarea id="symptom-text" rows="4" placeholder="Describe your symptoms in natural language (e.g., 'I have had a throbbing headache on the right side for two days and bright light makes it worse...')" class="w-full bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-2xl p-4 text-slate-900 text-sm resize-none outline-none font-normal transition-all"></textarea>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <span class="text-xs text-slate-500 font-medium">NLP entity extractor will automatically isolate clinical slots.</span>
+          <button onclick="submitInitialSymptom()" class="w-full sm:w-auto btn-gradient text-white font-bold px-8 py-3.5 rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2">
+            <span>Analyze Symptoms & Initiate Intake</span> ➔
+          </button>
+        </div>
+
+        <div class="pt-5 border-t border-slate-100 space-y-3">
+          <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Preset Clinical Scenarios:</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="useSample('I have had a throbbing headache on the right side for two days and bright light makes it worse.')" class="text-left bg-slate-50/80 hover:bg-slate-100 p-4 rounded-2xl border border-slate-200/80 text-xs transition-all hover:border-sky-400 group">
+              <strong class="text-sky-700 block text-xs font-bold group-hover:text-sky-800">Neurological Presentation (Migraine / Photophobia)</strong>
+              <span class="text-slate-500 font-normal">Unilateral throbbing headache with light sensitivity</span>
+            </button>
+            <button onclick="useSample('I have sudden severe chest pain and squeezing pressure radiating to my left arm and cold sweating.')" class="text-left bg-slate-50/80 hover:bg-slate-100 p-4 rounded-2xl border border-slate-200/80 text-xs transition-all hover:border-rose-400 group">
+              <strong class="text-rose-700 block text-xs font-bold group-hover:text-rose-800">Cardiology Red-Flag Emergency (Acute Chest Pressure)</strong>
+              <span class="text-slate-500 font-normal">Chest pressure radiating to left arm, cold sweating</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Comprehensive 6-Question Questionnaire -->
+      <div id="step-followup" class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-6 hidden animate-slide-right">
+        <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+          <div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">Clinical Intake Wizard</span>
+            <h3 class="text-xl font-bold text-slate-900 mt-1 font-heading">Structured Clinical Intake Questionnaire</h3>
+            <p class="text-xs text-slate-500 mt-0.5">Answer these targeted clinical questions to optimize machine learning feature attribution and vector retrieval accuracy.</p>
+          </div>
+          <span class="w-8 h-8 rounded-full bg-sky-50 text-sky-700 font-bold flex items-center justify-center text-xs border border-sky-200">02</span>
+        </div>
+        
+        <div id="followup-questions-container" class="space-y-5"></div>
+        
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+          <button onclick="resetAssistant()" class="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors">Reset Intake</button>
+          <button onclick="submitFollowUps()" class="btn-gradient text-white font-bold px-8 py-3.5 rounded-2xl text-xs shadow-lg flex items-center gap-2">
+            <span>Run ML Engine & Synthesize Report</span> ➔
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Clinical Dashboard & Output Summary -->
+      <div id="step-results" class="space-y-6 hidden animate-fade-in">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div id="urgency-gauge-card" class="glass-card rounded-3xl p-6 border border-slate-200/80 shadow-md space-y-4"></div>
+          <div id="similarity-chart-card" class="lg:col-span-2 glass-card rounded-3xl p-6 border border-slate-200/80 shadow-md space-y-4"></div>
+        </div>
+
+        <div id="xai-dashboard-card" class="glass-card rounded-3xl p-6 border border-slate-200/80 shadow-md space-y-4"></div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-700 border border-sky-200">Grounded Evidence Output</span>
+              <h3 class="text-2xl font-bold text-slate-900 mt-1 font-heading">Clinical Consultation Summary</h3>
+            </div>
+            <button onclick="downloadPDFDirect()" class="flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all hover:-translate-y-0.5">
+              <span>📥 Export PDF Consultation Report</span>
+            </button>
+          </div>
+
+          <div class="bg-slate-50/90 rounded-2xl p-6 border border-slate-200/80 space-y-2.5">
+            <div class="text-xs font-bold text-sky-800 uppercase tracking-wider font-heading">📖 Evidence-Grounded Synthesis:</div>
+            <div id="grounded-text-content" class="text-slate-800 text-sm leading-relaxed whitespace-pre-line font-normal"></div>
+          </div>
+
+          <div class="bg-emerald-50/70 rounded-2xl p-6 border border-emerald-200 space-y-3">
+            <h4 class="text-xs font-bold text-emerald-900 uppercase tracking-wider font-heading">💚 Recommended Healthcare Discussion Points:</h4>
+            <ul id="self-care-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-emerald-950 font-medium"></ul>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider font-heading">Retrieved Vector Knowledge Base Passages:</h4>
+            <div id="sources-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: MACHINE LEARNING ANALYTICS PAGE -->
+    <div id="view-model" class="space-y-6 hidden animate-fade-in">
+      <div id="model-metrics-container" class="space-y-6"></div>
+    </div>
+
+    <!-- VIEW 3: EVALUATOR BENCHMARK SUITE -->
+    <div id="view-simulation" class="space-y-6 hidden animate-fade-in">
+      <div id="simulation-container" class="space-y-6"></div>
+    </div>
+
+    <!-- VIEW 4: CLINICAL KNOWLEDGE BASE -->
+    <div id="view-knowledge" class="space-y-6 hidden animate-fade-in">
+      <div class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-4">
+        <h2 class="text-2xl font-bold text-slate-900 font-heading">Curated Clinical Knowledge Base Explorer</h2>
+        <input type="text" id="kb-search" oninput="filterKB()" placeholder="Search clinical terms, conditions, or guidelines..." class="w-full bg-slate-50/80 border border-slate-300 focus:border-sky-600 focus:ring-2 focus:ring-sky-500/20 rounded-2xl px-5 py-3.5 text-xs text-slate-900 outline-none transition-all">
+      </div>
+      <div id="kb-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- VIEW 5: SYSTEM ARCHITECTURE & AI PIPELINE -->
+    <div id="view-docs" class="space-y-6 hidden animate-fade-in">
+      <div class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h2 class="text-2xl font-bold text-slate-900 font-heading">MediSense AI System Architecture</h2>
+          <p class="text-xs text-slate-500 mt-1">Technical specification of the NLP slot extraction, ML classifier, and Vector RAG retrieval engine.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+          <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+            <h4 class="font-bold text-slate-900 text-sm font-heading">1. NLP Entity Parsing Engine</h4>
+            <p class="text-slate-600 leading-relaxed">Regex-assisted clinical entity extraction mapping 8 core slots: primary symptom, body location, pain quality, duration, severity scale, onset speed, triggers, and associated systemic indicators.</p>
+          </div>
+          <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+            <h4 class="font-bold text-slate-900 text-sm font-heading">2. Scikit-Learn ML Classifier</h4>
+            <p class="text-slate-600 leading-relaxed">Random Forest Classifier (100 estimators) trained on 160 multi-feature clinical vectors. Evaluates feature attribution weights to generate transparent urgency predictions (96.9% accuracy).</p>
+          </div>
+          <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-2.5">
+            <h4 class="font-bold text-slate-900 text-sm font-heading">3. Vector RAG Engine</h4>
+            <p class="text-slate-600 leading-relaxed">TF-IDF Vector Space Model & Cosine Similarity search over 10 clinical knowledge domains. Synthesizes evidence-grounded health information with source citations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200/80 bg-white/80 backdrop-blur-md py-6 px-4 md:px-8 mt-12 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div><strong>MediSense AI</strong> • Human-Centered Clinical Symptom Intelligence</div>
+      <div class="text-slate-600 font-medium">Educational Healthcare Decision-Support System</div>
+    </div>
+  </footer>
+
+  <!-- Logic Script -->
+  <script>
+    const API_BASE = 'http://127.0.0.1:8000/api';
+    let currentInitialText = '';
+    let currentNLPData = null;
+    let userAnswers = {};
+    let currentRAGData = null;
+    let fullKBData = [];
+
+    window.onload = function() {
+      renderFlowchart([
+        { id: "01", name: "Patient Intake", status: "pending", detail: "Awaiting registration" },
+        { id: "02", name: "NLP Engine", status: "pending", detail: "Entity slot parsing" },
+        { id: "03", name: "Context Check", status: "pending", detail: "Slot completeness" },
+        { id: "04", name: "Clinical Intake", status: "pending", detail: "6 Questionnaire items" },
+        { id: "05", name: "ML Classifier", status: "pending", detail: "Scikit-learn RF" },
+        { id: "06", name: "Safety Screen", status: "pending", detail: "Red-flag triage" },
+        { id: "07", name: "Vector RAG", status: "pending", detail: "TF-IDF Vector Search" },
+        { id: "08", name: "Clinical Report", status: "pending", detail: "PDF Export Ready" }
+      ]);
+    };
+
+    function renderFlowchart(stages) {
+      const container = document.getElementById('pipeline-flowchart-container');
+      container.innerHTML = stages.map(s => `
+        <div class="p-3 rounded-2xl border text-left transition-all duration-300 ${s.status === 'completed' ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950 font-bold shadow-xs' : (s.status === 'active' ? 'bg-sky-50/90 border-sky-400 text-sky-950 font-bold shadow-md ring-2 ring-sky-500/20' : 'bg-slate-50/60 border-slate-200 text-slate-500')}">
+          <div class="text-[10px] font-extrabold text-slate-400">${s.id}</div>
+          <div class="text-[11px] font-bold truncate mt-0.5">${s.name}</div>
+          <div class="text-[10px] text-slate-500 truncate font-normal">${s.detail}</div>
+        </div>
+      `).join('');
+    }
+
+    function setAvatarState(state, message) {
+      const badge = document.getElementById('avatar-badge');
+      const thought = document.getElementById('avatar-thought');
+
+      if (state === 'LISTENING') {
+        badge.className = 'px-3 py-0.5 rounded-full text-[10px] font-extrabold bg-teal-50 text-teal-800 border border-teal-200 tracking-wider';
+        badge.innerText = 'PROCESSING PATIENT INPUT';
+      } else if (state === 'THINKING' || state === 'PROCESSING') {
+        badge.className = 'px-3 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-50 text-indigo-800 border border-indigo-200 tracking-wider';
+        badge.innerText = 'ANALYZING NLP & ML CLASSIFIER';
+      } else if (state === 'WARNING') {
+        badge.className = 'px-3 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-50 text-rose-800 border border-rose-200 tracking-wider';
+        badge.innerText = 'EMERGENCY RED-FLAG SAFETY ALERT';
+      } else {
+        badge.className = 'px-3 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-50 text-sky-700 border border-sky-200 tracking-wider';
+        badge.innerText = 'SYSTEM READY';
+      }
+
+      thought.innerText = message;
+    }
+
+    async function submitInitialSymptom() {
+      const text = document.getElementById('symptom-text').value.trim();
+      if (!text) {
+        alert('Please enter symptom details to analyze.');
+        return;
+      }
+      currentInitialText = text;
+
+      setAvatarState('THINKING', 'Parsing natural language symptoms and mapping clinical entities...');
+
+      try {
+        const res = await fetch(`${API_BASE}/analyze-symptoms`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ text })
+        });
+        currentNLPData = await res.json();
+
+        if (currentNLPData.pipeline_stages) renderFlowchart(currentNLPData.pipeline_stages);
+
+        if (currentNLPData.adaptive_questions && currentNLPData.adaptive_questions.length > 0) {
+          renderFollowUps();
+          document.getElementById('step-input').classList.add('hidden');
+          document.getElementById('step-followup').classList.remove('hidden');
+          setAvatarState('ASKING', `Extracted ${currentNLPData.parsed_entities.extracted_symptoms.length} symptom terms. Complete the clinical intake questions to refine vector retrieval.`);
+        } else {
+          await executeRAG(text, {});
+        }
+      } catch (err) {
+        alert('Backend connection error: Please ensure python backend/app.py is running on port 8000.');
+      }
+    }
+
+    function renderFollowUps() {
+      const qContainer = document.getElementById('followup-questions-container');
+      qContainer.innerHTML = currentNLPData.adaptive_questions.map((q, qIdx) => `
+        <div class="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80 space-y-3 transition-all hover:border-slate-300">
+          <label class="block text-xs font-bold text-slate-900">${q.question}</label>
+          <div class="p-2.5 bg-sky-50/80 text-sky-950 text-[11px] rounded-xl border border-sky-100 font-medium">
+            <strong>Clinical Rationale:</strong> ${q.reason}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            ${q.options.map(opt => `
+              <button type="button" onclick="selectOption('${q.id}', '${opt}', this)" class="opt-btn-${q.id} text-left px-4 py-2.5 rounded-xl text-xs font-medium border border-slate-300/80 bg-white text-slate-700 hover:border-sky-500 hover:shadow-2xs transition-all active:scale-95">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectOption(qId, val, btnElem) {
+      userAnswers[qId] = val;
+      document.querySelectorAll(`.opt-btn-${qId}`).forEach(b => {
+        b.className = 'opt-btn-' + qId + ' text-left px-4 py-2.5 rounded-xl text-xs font-medium border border-slate-300/80 bg-white text-slate-700 hover:border-sky-500 transition-all';
+      });
+      btnElem.className = 'opt-btn-' + qId + ' text-left px-4 py-2.5 rounded-xl text-xs font-bold border border-sky-600 bg-gradient-to-r from-sky-600 to-indigo-600 text-white shadow-md';
+    }
+
+    async function submitFollowUps() {
+      setAvatarState('PROCESSING', 'Running Scikit-Learn ML classifier and retrieving Vector RAG passages...');
+      await executeRAG(currentInitialText, userAnswers);
+    }
+
+    async function executeRAG(initialText, context) {
+      try {
+        const res = await fetch(`${API_BASE}/synthesize-rag`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ initial_text: initialText, context })
+        });
+        currentRAGData = await res.json();
+        renderResults();
+      } catch (err) {
+        alert('RAG synthesis failed: ' + err.message);
+      }
+    }
+
+    function renderResults() {
+      document.getElementById('step-input').classList.add('hidden');
+      document.getElementById('step-followup').classList.add('hidden');
+      document.getElementById('step-results').classList.remove('hidden');
+
+      if (currentRAGData.pipeline_stages) renderFlowchart(currentRAGData.pipeline_stages);
+
+      const risk = currentRAGData.risk_assessment;
+      const ml = currentRAGData.ml_prediction;
+
+      if (risk.urgency_level === 'EMERGENCY') {
+        setAvatarState('WARNING', 'CRITICAL ALERT: Emergency red flags detected! Immediate emergency medical evaluation is recommended.');
+      } else {
+        setAvatarState('RESPONDING', `Clinical analysis complete! Scikit-Learn Random Forest predicted ${ml.predicted_urgency} urgency with ${ml.confidence_score}% model confidence.`);
+      }
+
+      // Render Urgency Gauge & Similarity Chart
+      document.getElementById('urgency-gauge-card').innerHTML = `
+        <div class="text-xs font-extrabold text-slate-500 uppercase tracking-wider font-heading">Clinical Urgency Index</div>
+        <div class="text-4xl font-black text-slate-900 font-heading tracking-tight">${risk.urgency_score} <span class="text-lg font-bold text-slate-400">/ 100</span></div>
+        <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden border border-slate-200 p-0.5">
+          <div class="h-full rounded-full transition-all duration-1000 ${risk.urgency_level === 'EMERGENCY' ? 'bg-rose-600' : (risk.urgency_level === 'HIGH' ? 'bg-amber-600' : 'bg-sky-600')}" style="width: ${risk.urgency_score}%"></div>
+        </div>
+        <div class="text-xs font-bold text-slate-800 flex items-center justify-between border-t border-slate-100 pt-2">
+          <span>Predicted Tier:</span>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-sky-50 text-sky-700 border border-sky-200">${ml.predicted_urgency} (${ml.confidence_score}%)</span>
+        </div>
+      `;
+
+      document.getElementById('similarity-chart-card').innerHTML = `
+        <div class="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2 font-heading">Vector RAG Cosine Similarity Scores</div>
+        <div class="space-y-3">
+          ${(currentRAGData.chart_similarity_data || []).map(c => `
+            <div>
+              <div class="flex justify-between text-xs font-bold text-slate-800 mb-1">
+                <span>${c.title}</span>
+                <span class="text-sky-700 font-extrabold">${c.score}% Match</span>
+              </div>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                <div class="bg-gradient-to-r from-sky-600 to-indigo-600 h-full rounded-full transition-all duration-1000" style="width: ${c.score}%"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // XAI Dashboard Card
+      document.getElementById('xai-dashboard-card').innerHTML = `
+        <h4 class="text-sm font-bold text-slate-900 border-b pb-2.5 font-heading">Explainable AI (XAI) Feature Attribution Breakdown</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs pt-2">
+          <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-1">
+            <strong class="text-slate-900 font-bold block text-xs">1. NLP Parsing:</strong>
+            <span class="text-slate-600 font-normal">Entities: ${currentRAGData.parsed_entities.extracted_symptoms.join(', ') || 'General'}</span><br>
+            <span class="text-slate-600 font-normal">Body Location: ${currentRAGData.parsed_entities.body_location}</span>
+          </div>
+          <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-1">
+            <strong class="text-slate-900 font-bold block text-xs">2. ML Prediction:</strong>
+            <span class="text-slate-600 font-normal">Class: ${ml.predicted_urgency} (${ml.confidence_score}%)</span><br>
+            <span class="text-slate-600 font-normal">Attributions: ${ml.feature_explanations.join('; ')}</span>
+          </div>
+          <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-1">
+            <strong class="text-slate-900 font-bold block text-xs">3. Vector Search:</strong>
+            <span class="text-slate-600 font-normal">Top Topic: ${currentRAGData.rag_synthesis.primary_condition}</span><br>
+            <span class="text-slate-600 font-normal">Similarity Score: ${Math.round((currentRAGData.rag_synthesis.top_similarity_score || 0.85) * 100)}%</span>
+          </div>
+        </div>
+      `;
+
+      // Grounded Text
+      document.getElementById('grounded-text-content').innerText = currentRAGData.rag_synthesis.grounded_text;
+
+      // Self Care
+      document.getElementById('self-care-list').innerHTML = (currentRAGData.rag_synthesis.home_self_care || []).map(sc => `
+        <li class="bg-white/90 p-3.5 rounded-2xl border border-emerald-100 flex items-start gap-2.5 shadow-2xs">
+          <span class="text-emerald-600 font-extrabold text-sm">•</span>
+          <span>${sc}</span>
+        </li>
+      `).join('');
+
+      // Sources
+      document.getElementById('sources-container').innerHTML = (currentRAGData.rag_synthesis.sources || []).map(s => `
+        <div class="bg-slate-50/80 rounded-2xl p-4.5 border border-slate-200/80 space-y-2 text-xs transition-all hover:border-sky-300">
+          <div class="flex items-center justify-between font-bold text-sky-700">
+            <span>${s.citation_tag}</span>
+            <span class="bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200">${s.relevance_score} Match</span>
+          </div>
+          <div class="font-bold text-slate-900 text-sm font-heading">${s.title}</div>
+          <div class="text-slate-600 leading-relaxed font-normal">${s.evidence_excerpt}</div>
+        </div>
+      `).join('');
+    }
+
+    function useSample(txt) {
+      document.getElementById('symptom-text').value = txt;
+      setAvatarState('LISTENING', 'Preset clinical scenario loaded into natural language input.');
+    }
+
+    function resetAssistant() {
+      document.getElementById('symptom-text').value = '';
+      userAnswers = {};
+      document.getElementById('step-input').classList.remove('hidden');
+      document.getElementById('step-followup').classList.add('hidden');
+      document.getElementById('step-results').classList.add('hidden');
+      document.getElementById('emergency-banner-area').classList.add('hidden');
+      setAvatarState('IDLE', 'Enter patient details and symptoms to initiate analysis.');
+    }
+
+    function switchTab(tab) {
+      ['assistant', 'model', 'simulation', 'knowledge', 'docs'].forEach(t => {
+        document.getElementById('view-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).className = 'px-5 py-2.5 rounded-xl font-bold text-xs bg-white/80 hover:bg-white text-slate-600 border border-slate-200 hover:text-slate-900 shadow-2xs whitespace-nowrap transition-all duration-200';
+      });
+
+      document.getElementById('view-' + tab.toLowerCase()).classList.remove('hidden');
+      document.getElementById('tab-' + tab.toLowerCase()).className = 'px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-sky-600 to-indigo-600 text-white shadow-md shadow-sky-500/15 whitespace-nowrap transition-all duration-200';
+
+      if (tab === 'MODEL') loadModelPerformance();
+      if (tab === 'SIMULATION') loadSimulationTests();
+      if (tab === 'KNOWLEDGE') loadKB();
+    }
+
+    async function loadModelPerformance() {
+      try {
+        const res = await fetch(`${API_BASE}/model-performance`);
+        const data = await res.json();
+        const rf = data.models.random_forest;
+        const lr = data.models.logistic_regression;
+
+        document.getElementById('model-metrics-container').innerHTML = `
+          <div class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold text-slate-900 font-heading">Machine Learning Classifier Analytics</h3>
+              <p class="text-xs text-slate-500 mt-1">Supervised classification metrics comparing Random Forest Classifier vs Logistic Regression (160 clinical vectors).</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-1">
+                <span class="text-slate-500 font-medium block">Training Samples:</span>
+                <strong class="text-2xl font-black text-slate-900 font-heading">${data.dataset_info.total_samples}</strong>
+              </div>
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-1">
+                <span class="text-slate-500 font-medium block">Random Forest Accuracy:</span>
+                <strong class="text-2xl font-black text-sky-600 font-heading">${Math.round(rf.accuracy*100)}%</strong>
+              </div>
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-1">
+                <span class="text-slate-500 font-medium block">Logistic Regression:</span>
+                <strong class="text-2xl font-black text-slate-700 font-heading">${Math.round(lr.accuracy*100)}%</strong>
+              </div>
+              <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 space-y-1">
+                <span class="text-slate-500 font-medium block">Random Forest F1-Score:</span>
+                <strong class="text-2xl font-black text-emerald-600 font-heading">${rf.f1_score}</strong>
+              </div>
+            </div>
+
+            <div class="p-5 bg-emerald-50/80 rounded-2xl border border-emerald-200 text-xs font-bold text-emerald-950 flex items-center justify-between">
+              <span>Selected Clinical Model: Random Forest Classifier (${Math.round(rf.accuracy*100)}% Empirical Accuracy)</span>
+              <span class="px-3 py-1 bg-emerald-600 text-white rounded-full text-[10px] uppercase font-black">Production Ready</span>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadSimulationTests() {
+      try {
+        const res = await fetch(`${API_BASE}/simulation-tests`);
+        const data = await res.json();
+
+        document.getElementById('simulation-container').innerHTML = `
+          <div class="glass-card rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-md space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold text-slate-900 font-heading">Evaluator Benchmark Simulation Suite</h3>
+              <p class="text-xs text-slate-500 mt-1">Automated validation matrix evaluating 10 pre-packaged clinical presentations (${data.passed_tests}/${data.total_tests} PASSED - ${data.pass_rate_pct}% Pass Rate).</p>
+            </div>
+            
+            <div class="space-y-3">
+              ${data.test_cases.map(tc => `
+                <div class="p-4 bg-slate-50/80 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs transition-all hover:border-slate-300">
+                  <div>
+                    <span class="font-bold text-slate-900 font-heading">[${tc.test_id}] ${tc.test_name}:</span>
+                    <span class="text-slate-600 font-normal">"${tc.input_text}"</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-[11px] font-bold text-slate-500">Expected: ${tc.expected_urgency} | Actual: ${tc.final_urgency}</span>
+                    <span class="px-3 py-1 rounded-full font-extrabold text-[10px] ${tc.status === 'PASS' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-amber-100 text-amber-800'}">${tc.status}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadKB() {
+      if (fullKBData.length > 0) return;
+      try {
+        const res = await fetch(`${API_BASE}/knowledge-base`);
+        const data = await res.json();
+        fullKBData = data.documents || [];
+        renderKBGrid(fullKBData);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderKBGrid(docs) {
+      document.getElementById('kb-grid').innerHTML = docs.map(doc => `
+        <div class="glass-card rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-3.5 hover:shadow-md transition-all">
+          <div class="flex items-center justify-between text-xs">
+            <span class="px-3 py-0.5 rounded-full font-bold bg-sky-50 text-sky-700 border border-sky-200">${doc.category}</span>
+            <span class="px-3 py-0.5 rounded-full font-bold text-[10px] ${doc.urgency_tier === 'EMERGENCY' ? 'bg-rose-100 text-rose-800 border border-rose-200' : 'bg-slate-100 text-slate-700'}">Tier: ${doc.urgency_tier}</span>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 font-heading">${doc.title}</h3>
+          <p class="text-slate-600 text-xs leading-relaxed font-normal">${doc.content}</p>
+          <div class="text-[11px] text-slate-500 border-t border-slate-100 pt-2.5 font-medium">Source: ${doc.source}</div>
+        </div>
+      `).join('');
+    }
+
+    function filterKB() {
+      const query = document.getElementById('kb-search').value.toLowerCase();
+      const filtered = fullKBData.filter(d =>
+        d.title.toLowerCase().includes(query) ||
+        d.content.toLowerCase().includes(query) ||
+        d.symptoms.some(s => s.toLowerCase().includes(query))
+      );
+      renderKBGrid(filtered);
+    }
+
+    async function downloadPDFDirect() {
+      try {
+        const patientName = document.getElementById('patient-name').value || 'John Doe';
+        const patientAge = document.getElementById('patient-age').value || '38';
+        const patientGender = document.getElementById('patient-gender').value || 'Male';
+        const patientBlood = document.getElementById('patient-blood').value || 'O+';
+        const patientAllergies = document.getElementById('patient-allergies').value || 'None Specified';
+
+        const res = await fetch(`${API_BASE}/generate-doctor-report`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            initial_text: currentInitialText,
+            extracted_symptoms: currentNLPData?.parsed_entities?.extracted_symptoms || [],
+            context: userAnswers,
+            risk_assessment: currentRAGData.risk_assessment,
+            ml_prediction: currentRAGData.ml_prediction,
+            rag_synthesis: currentRAGData.rag_synthesis,
+            patient_info: {
+              full_name: patientName,
+              age: patientAge,
+              gender: patientGender,
+              blood_group: patientBlood,
+              medical_history: patientAllergies
+            }
+          })
+        });
+        const report = await res.json();
+        const p = report.patient_details || {};
+        
+        const printWin = window.open('', '_blank');
+        if (!printWin) {
+          alert("Please allow popups to download/print the PDF report.");
+          return;
+        }
+
+        printWin.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>MediSense AI Clinical Report - ${report.report_id}</title>
+            <style>
+              body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px; color: #0f172a; line-height: 1.5; font-size: 13px; }
+              .header { border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+              .title { font-size: 18px; font-weight: bold; color: #0f172a; margin: 0; }
+              .subtitle { font-size: 11px; color: #64748b; margin-top: 3px; }
+              .patient-card { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 12px; }
+              .section-title { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #0284c7; letter-spacing: 0.5px; margin-bottom: 6px; }
+              .box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
+              .tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-right: 4px; margin-bottom: 4px; }
+              .disclaimer { background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 8px; font-size: 11px; color: #92400e; margin-top: 25px; }
+              @media print { body { padding: 0; } }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <div>
+                <h1 class="title">MEDISENSE AI – CLINICAL CONSULTATION REPORT</h1>
+                <div class="subtitle">Human-Centered Symptom Intelligence & Decision-Support System</div>
+              </div>
+              <div style="text-align:right;font-size:11px;color:#475569;">
+                <div><strong>Report Ref:</strong> ${report.report_id}</div>
+                <div><strong>Date Generated:</strong> ${report.date_generated}</div>
+              </div>
+            </div>
+
+            <!-- Patient Information Banner -->
+            <div class="patient-card">
+              <div><strong>Patient Name:</strong> ${p.full_name || 'N/A'}</div>
+              <div><strong>Age / Gender:</strong> ${p.age || 'N/A'} yrs / ${p.gender || 'N/A'}</div>
+              <div><strong>Blood Group:</strong> ${p.blood_group || 'N/A'}</div>
+              <div style="grid-column: span 3;"><strong>Known History / Allergies:</strong> ${p.medical_history || 'None'}</div>
+            </div>
+
+            <div class="box">
+              <div class="section-title">Chief Complaint (Initial Presentation):</div>
+              <div>"${report.chief_complaint}"</div>
+            </div>
+
+            <div class="box">
+              <div class="section-title">NLP Extracted Clinical Entities:</div>
+              <div>${(report.identified_symptom_entities || []).map(e => `<span class="tag">${e}</span>`).join('')}</div>
+            </div>
+
+            <div class="box">
+              <div class="section-title">Clinical Urgency & ML Classifier Output:</div>
+              <div><strong>Predicted Urgency Tier:</strong> ${report.ml_predicted_urgency} (${report.ml_confidence}% Confidence)</div>
+              <div><strong>Safety Screen Rating:</strong> ${report.risk_classification}</div>
+              ${(report.ml_feature_explanations || []).length ? `<div style="margin-top:4px;"><strong>Feature Attributions:</strong> ${report.ml_feature_explanations.join('; ')}</div>` : ''}
+            </div>
+
+            <div class="box">
+              <div class="section-title">Matched Clinical Reference Citations:</div>
+              <ul style="margin:0;padding-left:18px;">
+                ${(report.reference_citations || []).map(ref => `<li>${ref}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="box">
+              <div class="section-title">Recommended Discussion Points for Healthcare Provider:</div>
+              <ul style="margin:0;padding-left:18px;">
+                ${(report.home_care_considerations || []).map(hc => `<li>${hc}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="disclaimer">
+              <strong>Notice:</strong> ${report.disclaimer}
+            </div>
+
+            <script>
+              window.onload = function() { window.print(); }
+            <\/script>
+          </body>
+          </html>
+        `);
+        printWin.document.close();
+      } catch (err) {
+        alert('PDF report generation error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

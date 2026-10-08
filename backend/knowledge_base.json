@@ -1,0 +1,122 @@
+[
+  {
+    "id": "KB001",
+    "title": "Migraine and Tension Headaches",
+    "category": "Neurology / Primary Care",
+    "source": "Mayo Clinic Medical Guidelines & MedlinePlus",
+    "url": "https://www.mayoclinic.org/diseases-conditions/migraine-headache",
+    "content": "Headaches are classified primarily into tension headaches, migraines, and cluster headaches. Tension headaches present as a dull, aching head pain with tightness across the forehead or back of neck, often triggered by stress or dehydration. Migraines present as pulsating or throbbing pain, usually on one side of the head, frequently accompanied by sensitivity to light (photophobia), sensitivity to sound (phonophobia), nausea, or vomiting. Red flags for headaches include sudden severe pain described as a 'thunderclap', head injury, neck stiffness with high fever, confusion, or weakness on one side of the body, which require immediate emergency medical evaluation.",
+    "symptoms": ["headache", "head pain", "throbbing pain", "light sensitivity", "photophobia", "nausea", "stress headache", "neck tightness"],
+    "red_flags": ["thunderclap headache", "neck stiffness with fever", "confusion", "one-sided weakness", "head injury"],
+    "urgency_tier": "Low to Moderate",
+    "self_care": ["Rest in a quiet, dark room", "Stay hydrated with water", "Apply cold or warm compresses to the forehead", "Manage stress through relaxation techniques"]
+  },
+  {
+    "id": "KB002",
+    "title": "Acute Coronary Syndrome and Cardiac Chest Pain",
+    "category": "Cardiology / Emergency Care",
+    "source": "American Heart Association (AHA) & CDC Guidelines",
+    "url": "https://www.heart.org/en/health-topics/heart-attack/warning-signs-of-a-heart-attack",
+    "content": "Cardiac chest pain (angina or myocardial infarction/heart attack) commonly presents as pressure, fullness, squeezing, or crushing chest discomfort centered in the mid or left side of the chest. The pain may radiate to the left shoulder, left arm, neck, jaw, back, or epigastrium. Associated symptoms include shortness of breath (dyspnea), cold sweats, dizziness, lightheadedness, and nausea. Symptoms requiring immediate call to emergency services (911 or local ER) include persistent chest pressure lasting >5 minutes, radiating discomfort to jaw or arm, severe difficulty breathing, or collapse.",
+    "symptoms": ["chest pain", "chest tightness", "chest pressure", "arm pain", "jaw pain", "shortness of breath", "cold sweat", "dizziness"],
+    "red_flags": ["chest pressure radiating to arm or jaw", "sudden shortness of breath", "cold sweating with chest pain", "fainting or collapse"],
+    "urgency_tier": "EMERGENCY",
+    "self_care": ["Call emergency services immediately (911/112/108)", "Do not drive yourself to the ER", "Rest in a comfortable seated position while awaiting emergency help"]
+  },
+  {
+    "id": "KB003",
+    "title": "Upper Respiratory Tract Infections and Influenza",
+    "category": "Infectious Disease / Pulmonology",
+    "source": "World Health Organization (WHO) & CDC",
+    "url": "https://www.cdc.gov/flu/symptoms/index.fr.htm",
+    "content": "Upper respiratory infections (URI), common colds, and seasonal influenza present with nasal congestion, sore throat, cough, sneezing, runny nose, and low to moderate fever. Influenza often has an abrupt onset with high fever, muscle or body aches, fatigue, and dry cough. Most uncomplicated URIs resolve in 7 to 10 days. Warning signs requiring urgent medical care include severe shortness of breath, persistent fever above 103°F (39.4°C) not responding to antipyretics, chest tightness during breathing, or inability to keep fluids down.",
+    "symptoms": ["cough", "fever", "sore throat", "runny nose", "nasal congestion", "sneezing", "body aches", "fatigue", "chills"],
+    "red_flags": ["difficulty breathing", "stridor or wheezing", "fever > 103°F", "bluish lips or face", "confusion"],
+    "urgency_tier": "Low to Moderate",
+    "self_care": ["Ensure plenty of rest", "Drink warm fluids (water, herbal teas, broth)", "Use saline nasal sprays or steam inhalation", "Gargle warm salt water for sore throat relief"]
+  },
+  {
+    "id": "KB004",
+    "title": "Gastroenteritis and Abdominal Pain",
+    "category": "Gastroenterology",
+    "source": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+    "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/viral-gastroenteritis",
+    "content": "Acute viral gastroenteritis (stomach flu) is characterized by watery diarrhea, abdominal cramps, nausea, vomiting, and occasionally low-grade fever. Key focus is preventing dehydration through oral rehydration solutions. Serious signs warranting urgent medical evaluation include severe right lower quadrant abdominal pain (suspected appendicitis), blood in stool or vomit, high fever, severe dehydration (dry mouth, no urination >8 hours, sunken eyes), or intractable pain.",
+    "symptoms": ["stomach pain", "abdominal cramps", "nausea", "vomiting", "diarrhea", "stomach flu", "indigestion", "bloating"],
+    "red_flags": ["severe right lower stomach pain", "blood in vomit or stool", "black tarry stools", "high fever", "inability to retain fluid for 24 hours"],
+    "urgency_tier": "Moderate",
+    "self_care": ["Sip small amounts of oral rehydration solution (ORS)", "Avoid milk, caffeine, alcohol, and greasy foods", "Eat bland foods like bananas, rice, applesauce, and toast (BRAT diet) when tolerated"]
+  },
+  {
+    "id": "KB005",
+    "title": "Cerebrovascular Accident (Stroke)",
+    "category": "Neurology / Emergency Medicine",
+    "source": "American Stroke Association (ASA)",
+    "url": "https://www.stroke.org/en/about-stroke/stroke-symptoms",
+    "content": "A stroke occurs when blood flow to a part of the brain is interrupted or reduced. Symptoms appear suddenly and can be recognized using the BE FAST protocol: Balance loss, Eyesight changes, Facial drooping on one side, Arm weakness or numbness on one side, Speech difficulty or slurred speech, Time to call emergency services. Immediate medical intervention within the golden hour is critical to minimize brain damage.",
+    "symptoms": ["facial drooping", "arm weakness", "slurred speech", "numbness", "sudden confusion", "vision loss", "loss of balance"],
+    "red_flags": ["facial drooping on one side", "one-sided arm or leg weakness", "slurred or garbled speech", "sudden loss of vision", "sudden severe imbalance"],
+    "urgency_tier": "EMERGENCY",
+    "self_care": ["Call emergency medical services (911) immediately", "Note the exact time symptoms started", "Do not give food, drink, or aspirin until evaluated by emergency medical personnel"]
+  },
+  {
+    "id": "KB006",
+    "title": "Asthma Exacerbation and Acute Bronchitis",
+    "category": "Pulmonology",
+    "source": "Global Initiative for Asthma (GINA) & Mayo Clinic",
+    "url": "https://www.mayoclinic.org/diseases-conditions/asthma-attack",
+    "content": "Asthma exacerbations involve inflammation and narrowing of the airways, leading to wheezing, chest tightness, shortness of breath, and coughing. Acute bronchitis involves inflammation of the bronchial tubes, often following a cold, causing persistent cough with clear or colored mucus. Red flags include severe breathlessness (inability to speak full sentences), chest retraction during breathing, blue tint to fingernails or lips, or lack of response to quick-relief inhaler.",
+    "symptoms": ["wheezing", "coughing", "shortness of breath", "chest tightness", "breathlessness", "mucus cough"],
+    "red_flags": ["unable to complete a sentence in one breath", "bluish lips or fingernails", "severe chest wall retractions", "no improvement after rescue inhaler"],
+    "urgency_tier": "Moderate to EMERGENCY",
+    "self_care": ["Sit upright comfortably", "Use prescribed rescue inhaler (e.g. albuterol) as directed", "Avoid asthma triggers like smoke, dust, and cold air"]
+  },
+  {
+    "id": "KB007",
+    "title": "Urinary Tract Infection (UTI)",
+    "category": "Urology / Primary Care",
+    "source": "CDC & MedlinePlus Medical Encyclopedia",
+    "url": "https://www.cdc.gov/uti/about/index.html",
+    "content": "Urinary tract infections (UTIs) occur when bacteria enter the urinary system, causing symptoms such as a strong, persistent urge to urinate, a burning sensation during urination (dysuria), cloudy or strong-smelling urine, and pelvic pain. Red flags suggesting upper UTI or kidney infection (pyelonephritis) include high fever, severe flank or back pain, chills, nausea, and vomiting, which require prompt prescription antibiotics.",
+    "symptoms": ["burning urination", "frequent urination", "cloudy urine", "pelvic pain", "urine pressure", "smelly urine"],
+    "red_flags": ["flank pain or upper back pain", "high fever with chills", "nausea and vomiting with urinary symptoms", "visible blood in urine"],
+    "urgency_tier": "Moderate",
+    "self_care": ["Drink plenty of water to flush out bacteria", "Avoid caffeine, alcohol, and spicy foods", "Consult a physician for a urine test and antibiotic evaluation"]
+  },
+  {
+    "id": "KB008",
+    "title": "Allergic Reactions and Anaphylaxis",
+    "category": "Allergy & Immunology / Emergency Medicine",
+    "source": "American Academy of Allergy, Asthma & Immunology (AAAAI)",
+    "url": "https://www.aaaai.org/conditions-treatments/allergies",
+    "content": "Mild allergic reactions present with hives, itchy rash, sneezing, or nasal congestion. Severe systemic allergic reactions (anaphylaxis) are life-threatening emergency events characterized by swelling of lips, tongue, or throat, tightness in chest, severe difficulty breathing, dizziness, rapid drop in blood pressure, or loss of consciousness. Anaphylaxis requires immediate epinephrine administration and emergency care.",
+    "symptoms": ["hives", "itchy rash", "sneezing", "swelling", "itching", "runny nose"],
+    "red_flags": ["throat tightness or throat swelling", "swelling of lips or tongue", "difficulty breathing or wheezing", "dizziness or fainting after allergen exposure"],
+    "urgency_tier": "EMERGENCY (if swelling/breathing impaired) / Low (if localized rash)",
+    "self_care": ["Administer epinephrine auto-injector (EpiPen) immediately if prescribed for severe reaction", "Call 911 immediately for severe swelling or breathing trouble", "Take antihistamines for mild localized itching/hives as advised by pharmacist"]
+  },
+  {
+    "id": "KB009",
+    "title": "Hypoglycemia and Hyperglycemia in Diabetes",
+    "category": "Endocrinology",
+    "source": "American Diabetes Association (ADA)",
+    "url": "https://diabetes.org/living-with-diabetes",
+    "content": "Hypoglycemia (low blood sugar <70 mg/dL) causes shaking, sweating, fast heart rate, confusion, dizziness, hunger, and blurred vision. Severe hypoglycemia can lead to seizures or loss of consciousness. Hyperglycemia (high blood sugar) manifests as extreme thirst, frequent urination, fatigue, and fruity-scented breath (diabetic ketoacidosis warning sign). Red flags include unconsciousness, seizures, persistent confusion, or deep rapid breathing with fruity breath.",
+    "symptoms": ["shaking", "sweating", "dizziness", "confusion", "extreme thirst", "frequent urination", "fast heartbeat", "hunger"],
+    "red_flags": ["loss of consciousness", "seizures", "fruity-smelling breath with deep rapid breathing", "inability to swallow fast-acting sugar"],
+    "urgency_tier": "Moderate to EMERGENCY",
+    "self_care": ["For mild low sugar: consume 15g fast-acting carbs (4 oz juice, glucose tabs)", "Recheck blood sugar in 15 minutes", "Seek immediate emergency help for severe confusion or unresponsiveness"]
+  },
+  {
+    "id": "KB0010",
+    "title": "Musculoskeletal Back Strain and Sciatica",
+    "category": "Orthopedics / Physical Medicine",
+    "source": "National Institute of Neurological Disorders and Stroke (NINDS)",
+    "url": "https://www.ninds.nih.gov/health-information/disorders/low-back-pain",
+    "content": "Low back pain is frequently caused by muscle strain or ligament sprain from heavy lifting, sudden movement, or poor posture. Sciatica presents as sharp, shooting pain radiating down the back of the thigh and leg along the sciatic nerve. Red flags requiring urgent emergency care (suspected Cauda Equina Syndrome or spinal infection) include loss of bowel or bladder control, numbness in the groin/saddle area, fever with back pain, or progressive leg weakness.",
+    "symptoms": ["back pain", "lower back ache", "shooting leg pain", "muscle spasm", "sciatica", "stiff back"],
+    "red_flags": ["sudden loss of bowel or bladder control", "saddle anesthesia (numbness between legs)", "progressive weakness in legs", "unexplained fever with severe back pain"],
+    "urgency_tier": "Low to EMERGENCY (if Cauda Equina red flags present)",
+    "self_care": ["Maintain gentle movement as tolerated, avoiding bed rest >2 days", "Apply ice packs for acute pain (first 48h), followed by gentle heat", "Practice ergonomic lifting techniques"]
+  }
+]
